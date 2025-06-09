@@ -1,60 +1,53 @@
-# 🌾 Crop Disease Detection using EfficientNetB4
+# 🌿 Crop Disease Detection using EfficientNetB4
 
-![Model Diagram](https://raw.githubusercontent.com/bmuralisridharan/Hackathon_Pavaman/main/assets/model.png)
+> A CNN-based computer vision model for detecting plant leaf diseases from RGB images, achieving **95.69% test accuracy** across 39 crop disease classes. Built using **EfficientNetB4** and optimized for both accuracy and performance.
 
-> **Accurately detect plant diseases using RGB images and deep learning with 95.6% test accuracy.**
-> 🚀 Live Demo: [Streamlit App](https://hackathonpavaman.streamlit.app/)
-> 🧠 Model: EfficientNetB4 | 📦 Dataset: [PlantVillage (Mendeley)](https://data.mendeley.com/datasets/tywbtsjrjv/1)
-
----
-
-## 📌 Project Overview
-
-Crop diseases threaten agricultural productivity worldwide. This project leverages **transfer learning** with **EfficientNetB4** to automatically classify plant leaf diseases using image data.
-
-* ✅ 39 Disease Categories
-* 🌱 Based on the **PlantVillage** dataset
-* ⚡ Fine-tuned EfficientNetB4
-* 📊 Achieved **95.69% accuracy** on the test set
-* 💻 Optimized for real-time inference
+📦 Dataset: [PlantVillage (Mendeley)](https://data.mendeley.com/datasets/tywbtsjrjv/1)
+🚀 Live Demo: [Streamlit App](https://hackathonpavaman.streamlit.app/)
 
 ---
 
-## 📁 Dataset
+## 🔍 Hackathon Project Submission Checklist ✅
 
-* **Source**: [PlantVillage (Mendeley)](https://data.mendeley.com/datasets/tywbtsjrjv/1)
-* **Augmented dataset**: Included in the ZIP
-* **Download**:
+### ✅ Model Code and Working
 
-  ```bash
-  wget -O dataset.zip "https://data.mendeley.com/public-files/datasets/tywbtsjrjv/files/b4e3a32f-c0bd-4060-81e9-6144231f2520/file_downloaded"
-  unzip dataset.zip
-  ```
+* Full training workflow implemented using TensorFlow/Keras.
+* Dataset loading, augmentation, and splitting.
+* Two-phase training:
 
----
+  * Stage 1: Frozen base training (6 epochs)
+  * Stage 2: Fine-tuning top layers (10 epochs)
+* Output: `.keras` model saved for deployment.
 
-## 🛠️ Model Architecture
-
-| Component            | Detail                            |
-| -------------------- | --------------------------------- |
-| 📦 Base Model        | EfficientNetB4 (ImageNet weights) |
-| 🧠 Training Strategy | Transfer Learning + Fine Tuning   |
-| 🎯 Input Size        | 160 × 160 × 3                     |
-| 🔁 Optimizer         | Adam                              |
-| 📉 Loss Function     | SparseCategoricalCrossentropy     |
-| 📊 Metrics           | SparseCategoricalAccuracy         |
-
-### ⚙️ Transfer Learning Flow
-
-1. Freeze base EfficientNetB4
-2. Add Global Avg Pooling + Dropout + Dense
-3. Train for 6 epochs
-4. Unfreeze top layers and fine-tune from layer 100
-5. Continue training for 10 more epochs
+📁 Code: [`Plant Disease Model Training.ipynb`](https://colab.research.google.com/drive/1ITgvDcMNlcwNMoq2f-43n4wl81q4xvXv)
 
 ---
 
-## 📈 Performance
+### 🧠 Model Architecture
+
+| Component      | Detail                               |
+| -------------- | ------------------------------------ |
+| 📦 Base Model  | EfficientNetB4 (ImageNet weights)    |
+| 🖼️ Input Size | 160 × 160 × 3                        |
+| 🧠 Layers      | GlobalAveragePooling, Dropout, Dense |
+| 🧪 Output      | Softmax (39 classes)                 |
+| ⚙️ Params      | \~19 million total                   |
+
+---
+
+### 📄 Why EfficientNetB4?
+
+EfficientNetB4 was chosen for:
+
+* ⚖️ Superior **accuracy-to-efficiency** trade-off
+* 🚀 Faster convergence with **ImageNet pretraining**
+* 📱 Lightweight for **mobile or edge deployment**
+* 🔁 Compound scaling of width, depth, and resolution
+* ✅ Proven performance in agricultural image tasks
+
+---
+
+## 📊 Model Evaluation Report
 
 | Metric       | Value      |
 | ------------ | ---------- |
@@ -63,70 +56,86 @@ Crop diseases threaten agricultural productivity worldwide. This project leverag
 | 🔁 Recall    | 95.69%     |
 | 📉 MSE       | 4.6521     |
 
-> Also evaluated using **IoU** for each class.
-> See full report in `plant_disease_model_documentation.pdf`.
+### 🧩 Intersection over Union (IoU) - Samples
+
+* Apple Black Rot: **0.9048**
+* Tomato Yellow Leaf Curl Virus: **0.9871**
+* Corn Healthy: **0.9915**
+* Tomato Early Blight: **0.6275**
+* Strawberry Leaf Scorch: **0.8346**
+
+> (Full IoU values across 39 classes included in PDF report)
+
+### 📦 Confusion Matrix
+
+A detailed confusion matrix was used to evaluate per-class accuracy and detect misclassifications.
+
+### ℹ️ mAP / SSIM / PSNR Notes
+
+* **mAP**: Estimated via IoU, not explicitly computed
+* **SSIM / PSNR**: Not applicable as task is classification, not image reconstruction
 
 ---
 
-## 🧪 Evaluation Visuals
+## 🧠 Sample Predictions (Model Output)
 
-![Predictions](https://raw.githubusercontent.com/bmuralisridharan/Hackathon_Pavaman/main/assets/predictions.png)
+<img src="fd2aeafa-fc86-482f-8099-bc3e093ad089.png" alt="Sample Predictions" width="600"/>
 
----
-
-## 🚀 Deployment
-
-* ✅ **Streamlit App**: [https://hackathonpavaman.streamlit.app](https://hackathonpavaman.streamlit.app)
-* 📂 **Model Export**:
-
-  ```python
-  model.save("plant_disease_recog_model_pwp.keras")
-  ```
+> Accurately classifies diseases like **Tomato Target Spot**, **Apple Black Rot**, and **Corn Healthy**.
 
 ---
 
-## 🧠 Why EfficientNetB4?
+## ⚙️ Optimization Techniques Used
 
-* ⚖️ Best trade-off between speed and accuracy
-* 📱 Optimized for mobile & low-resource deployment
-* ⏱️ Faster convergence using ImageNet pre-trained weights
-* 🌍 Robust across lighting, angle, and crop types
-
----
-
-## 🧬 Optimization Techniques
-
-* **📦 tf.data AUTOTUNE**: Pipelined input for faster training
-* **📐 Batch Size**: 32 — balanced for convergence and memory
-* **🖼️ Input Size**: 160×160 — optimized for speed
-* **🔧 Compound scaling** in EfficientNet for resource efficiency
+| Technique                  | Purpose                                       |
+| -------------------------- | --------------------------------------------- |
+| `tf.data.AUTOTUNE`         | Accelerate data pipeline                      |
+| **Transfer Learning**      | Leverage pre-trained EfficientNetB4           |
+| **Fine-tuning Layers**     | Improve domain-specific accuracy              |
+| **Batch Size = 32**        | Efficient memory usage and training stability |
+| **Input Size = 160×160**   | Balances speed and accuracy                   |
+| **Dropout Regularization** | Prevents overfitting during fine-tuning       |
 
 ---
 
-## 💻 Run It Yourself
+## 🖼️ Training & Validation Accuracy
 
-```bash
-pip install tensorflow matplotlib split-folders
-# Download and unzip dataset
-# Then run the training notebook (Colab link available)
+> Plot available in the notebook — visualize accuracy/loss over both training stages.
+
+```python
+plt.plot(acc, label='Training Accuracy')
+plt.plot(val_acc, label='Validation Accuracy')
 ```
 
 ---
 
-## 📂 Repository & Resources
+## 🧾 Project Summary
 
-* 🔗 [GitHub Repo](https://github.com/bmuralisridharan/Hackathon_Pavaman)
-* 📄 [Documentation PDF](plant_disease_model_documentation.pdf)
-
----
-
-## 👥 Team Credits
-
-* 🧑‍💻 Mohammed Thaher S.
-* 👨‍💻 \[Your teammates’ names here]
+* 🧠 **Deep CNN model** built with **EfficientNetB4** for plant disease detection
+* 🌱 Based on 39-class PlantVillage dataset
+* 🚀 Achieved near 96% accuracy and robust IoU performance
+* 🔧 Optimized pipeline: transfer learning, fine-tuning, batch tuning, dropout
+* 📱 Ready for real-time, mobile, or embedded deployment
 
 ---
 
-## 🏁 Final Words
+## 📂 Resources
 
-This project showcases the power of transfer learning in solving real-world agricultural challenges. With high accuracy and real-time performance, it has potential applications in **mobile crop advisory**, **agri-health monitoring**, and **smart farming**.
+* 📄 [Full Report PDF](plant_disease_model_documentation.pdf)
+* 🌐 [Live Streamlit App](https://hackathonpavaman.streamlit.app/)
+
+---
+
+## 👨‍💻 Team Credits
+
+* **Muthu Munia Rajan**
+* **Mohammed Thaher**
+* **Murali**
+* **Mohamed Farvez**
+
+---
+
+## 🪪 License
+
+Distributed under the **MIT License** — see `LICENSE` for details.
+
