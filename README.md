@@ -77,14 +77,6 @@ A detailed confusion matrix was used to evaluate per-class accuracy and detect m
 
 ---
 
-## 🧠 Sample Predictions (Model Output)
-
-<img src="fd2aeafa-fc86-482f-8099-bc3e093ad089.png" alt="Sample Predictions" width="600"/>
-
-> Accurately classifies diseases like **Tomato Target Spot**, **Apple Black Rot**, and **Corn Healthy**.
-
----
-
 ## ⚙️ Optimization Techniques Used
 
 | Technique                  | Purpose                                       |
@@ -121,7 +113,6 @@ plt.plot(val_acc, label='Validation Accuracy')
 
 ## 📂 Resources
 
-* 📄 [Full Report PDF](plant_disease_model_documentation.pdf)
 * 🌐 [Live Streamlit App](https://hackathonpavaman.streamlit.app/)
 
 ---
